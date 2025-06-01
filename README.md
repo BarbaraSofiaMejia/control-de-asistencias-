@@ -19,6 +19,55 @@ witch open(ARCHIVO,"w",newline="") as f :
                 return True
     return False
 
+def registrar_empleado():
+    ventana = tk.Toplevel()
+    ventana.title("Registrar Empleado")
+    ventana.geometry("300x250")
+
+ tk.Label(ventana, text="Nombre:").pack()
+    nombre = tk.Entry(ventana)
+    nombre.pack() 
+    
+   tk.Label(ventana, text="Apellido:").pack()
+    apellido = tk.Entry(ventana)
+    apellido.pack()
+
+   tk.Label(ventana, text="Puesto:").pack()
+    puesto = tk.Entry(ventana)
+    puesto.pack()
+    
+   tk.Label(ventana, text="Departamento:").pack()
+    departamento = tk.Entry(ventana)
+    departamento.pack()
+
+   def guardar():
+        if nombre.get() and apellido.get() and puesto.get() and departamento.get():
+            with open(ARCHIVO, "a", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow([nombre.get(), apellido.get(), puesto.get(), departamento.get()])
+            messagebox.showinfo("Éxito", "Empleado registrado.")
+            ventana.destroy()
+        else:
+            messagebox.showwarning("Error", "Todos los campos son obligatorios.")
+
+   tk.Button(ventana, text="Guardar", command=guardar).pack(pady=10)
+
+   
+def ver_empleados():
+    ventana = tk.Toplevel()
+    ventana.title("Lista de Empleados")
+    ventana.geometry("400x300")
+
+   texto = tk.Text(ventana)
+    texto.pack(fill=tk.BOTH, expand=True)
+
+   with open(ARCHIVO, "r") as f:
+        for linea in f:
+            texto.insert(tk.END, linea)
+
+
+
+    
   
     
     
