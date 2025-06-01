@@ -65,6 +65,49 @@ def ver_empleados():
         for linea in f:
             texto.insert(tk.END, linea)
 
+    
+def eliminar_empleado():
+    ventana = tk.Toplevel()
+    ventana.title("Eliminar Empleado")
+    ventana.geometry("300x150")
+
+   tk.Label(ventana, text="Nombre:").pack()
+    nombre = tk.Entry(ventana)
+    nombre.pack()
+
+   tk.Label(ventana, text="Apellido:").pack()
+    apellido = tk.Entry(ventana)
+    apellido.pack()   
+
+   def eliminar():
+        if not nombre.get() or not apellido.get():
+            messagebox.showwarning("Error", "Completa ambos campos.")
+            return
+
+   if not empleado_existe(nombre.get(), apellido.get()):
+            messagebox.showerror("Error", "Dato no existente.")
+            return
+
+   empleados_actualizados = []
+        with open(ARCHIVO, "r") as f:
+            reader = csv.DictReader(f)
+            for fila in reader:
+                if not (fila["Nombre"].strip().lower() == nombre.get().strip().lower() and 
+                        fila["Apellido"].strip().lower() == apellido.get().strip().lower()):
+                    empleados_actualizados.append(fila)
+
+    
+   with open(ARCHIVO, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=["Nombre", "Apellido", "Puesto", "Departamento"])
+            writer.writeheader()
+            writer.writerows(empleados_actualizados)
+
+   messagebox.showinfo("Éxito", "Empleado eliminado.")
+        ventana.destroy()
+
+   tk.Button(ventana, text="Eliminar", command=eliminar).pack(pady=10)
+
+
 
 
     
