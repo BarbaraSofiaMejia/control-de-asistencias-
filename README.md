@@ -107,6 +107,49 @@ def eliminar_empleado():
 
    tk.Button(ventana, text="Eliminar", command=eliminar).pack(pady=10)
 
+   ef registrar_asistencia():
+    ventana = tk.Toplevel()
+    ventana.title("Registrar Asistencia")
+    ventana.geometry("300x150")
+
+   tk.Label(ventana, text="Nombre:").pack()
+    nombre = tk.Entry(ventana)
+    nombre.pack()
+
+   tk.Label(ventana, text="Apellido:").pack()
+    apellido = tk.Entry(ventana)
+    apellido.pack()
+
+   def registrar():
+        if empleado_existe(nombre.get(), apellido.get()):
+            messagebox.showinfo("Éxito", "Asistencia registrada.")
+        else:
+            messagebox.showerror("Error", "Dato no existente.")
+        ventana.destroy()
+
+   tk.Button(ventana, text="Registrar", command=registrar).pack(pady=10)
+
+
+   tk.Button(ventana, text="Guardar", command=guardar).pack(pady=10)
+
+def registrar_incapacidad():
+    ventana = tk.Toplevel()
+    ventana.title("Registrar Incapacidad")
+    ventana.geometry("300x200")
+
+   tk.Label(ventana, text="Nombre:").pack()
+    nombre = tk.Entry(ventana)
+    nombre.pack()
+
+   tk.Label(ventana, text="Apellido:").pack()
+    apellido = tk.Entry(ventana)
+    apellido.pack()
+
+   tk.Label(ventana, text="Días de incapacidad:").pack()
+    dias = tk.Entry(ventana)
+    dias.pack()
+
+
 
 
 
