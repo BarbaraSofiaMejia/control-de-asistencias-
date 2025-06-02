@@ -149,6 +149,66 @@ def registrar_incapacidad():
     dias = tk.Entry(ventana)
     dias.pack()
 
+ def guardar():
+        if empleado_existe(nombre.get(), apellido.get()):
+            messagebox.showinfo("Éxito", f"Incapacidad registrada por {dias.get()} días.")
+        else:
+            messagebox.showerror("Error", "Dato no existente.")
+        ventana.destroy()
+
+   tk.Button(ventana, text="Guardar", command=guardar).pack(pady=10)
+
+def registrar_vacaciones():
+    ventana = tk.Toplevel()
+    ventana.title("Registrar Vacaciones")
+    ventana.geometry("300x200")
+
+   tk.Label(ventana, text="Nombre:").pack()
+    nombre = tk.Entry(ventana)
+    nombre.pack()
+
+   tk.Label(ventana, text="Apellido:").pack()
+    apellido = tk.Entry(ventandef retardos_permisos():
+    ventana = tk.Toplevel()
+    ventana.title("Retardos y Permisos")
+    ventana.geometry("300x200")
+
+   tk.Label(ventana, text="Nombre:").pack()
+    nombre = tk.Entry(ventana)
+    nombre.pack()
+
+   tk.Label(ventana, text="Apellido:").pack()
+    apellido = tk.Entry(ventana)
+    apellido.pack()
+
+   tk.Label(ventana, text="Tipo (Retardo/Permiso):").pack()
+    tipo = tk.Entry(ventana)
+    tipo.pack()
+
+   def guardar():
+        if empleado_existe(nombre.get(), apellido.get()):
+            messagebox.showinfo("Éxito", f"{tipo.get()} registrado.")
+        else:
+            messagebox.showerror("Error", "Dato no existente.")
+        ventana.destroy()a)
+    apellido.pack()
+
+   tk.Label(ventana, text="Fecha de inicio:").pack()
+    inicio = tk.Entry(ventana)
+    inicio.pack()
+
+   tk.Label(ventana, text="Fecha de fin:").pack()
+    fin = tk.Entry(ventana)
+    fin.pack()
+
+   def guardar():
+        if empleado_existe(nombre.get(), apellido.get()):
+            messagebox.showinfo("Éxito", f"Vacaciones registradas del {inicio.get()} al {fin.get()}.")
+        else:
+            messagebox.showerror("Error", "Dato no existente.")
+        ventana.destroy()
+
+   tk.Button(ventana, text="Guardar", command=guardar).pack(pady=10)
 
 
 
