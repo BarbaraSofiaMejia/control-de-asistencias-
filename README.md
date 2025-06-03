@@ -2,7 +2,15 @@ import tkinter as tk
 from tkinter import messagebox
 import cssv
 import os 
+
+from datetime import datetime
+
 ARCHIVO="Empleados.csv"
+
+ASISTENCIAS = "Asistencias.csv"
+RETARDOS_PERMISOS = "RetardosPermisos.csv"
+INCAPACIDADES = "Incapacidades.csv"
+VACACIONES = "Vacaciones.csv"
 
 
 if not os.path.exists(ARCHIVO).
