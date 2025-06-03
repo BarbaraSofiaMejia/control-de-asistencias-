@@ -210,6 +210,33 @@ def registrar_vacaciones():
 
    tk.Button(ventana, text="Guardar", command=guardar).pack(pady=10)
 
+   ventana = tk.Tk()
+ventana.title("Control de Personal")
+ventana.geometry("500x350")
+
+tk.Label(ventana, text="Bienvenido al Sistema de Control de Personal", font=("Arial", 14)).pack(pady=50)
+
+
+def activar_menu():
+    ventana.config(menu=menu_principal)
+    boton_menu.pack_forget()
+    tk.Label(ventana, text="Opciones activadas arriba.", fg="green").pack()
+
+boton_menu = tk.Button(ventana, text="Ir al menú de opciones", font=("Arial", 12), command=activar_menu)
+boton_menu.pack(pady=10)
+
+menu_principal = tk.Menu(ventana)
+opciones = tk.Menu(menu_principal, tearoff=0)
+opciones.add_command(label="Registrar Empleado", command=registrar_empleado)
+opciones.add_command(label="Eliminar Empleado", command=eliminar_empleado)
+opciones.add_command(label="Registro de Asistencia", command=registrar_asistencia)
+opciones.add_command(label="Retardos y Permisos", command=retardos_permisos)
+opciones.add_command(label="Incapacidad", command=registrar_incapacidad)
+opciones.add_command(label="Vacaciones", command=registrar_vacaciones)
+
+menu_principal.add_cascade(label="Opciones", menu=opciones)
+
+ventana.mainloop()
 
 
 
