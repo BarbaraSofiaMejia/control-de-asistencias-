@@ -1,24 +1,25 @@
 import tkinter as tk
-from tkinter import messagebox
-import cssv
-import os 
+
+from tkinter import messagebox, ttk
+import csv
+import os
 
 from datetime import datetime
 
 ARCHIVO="Empleados.csv"
 
-ASISTENCIAS = "Asistencias.csv"
-RETARDOS_PERMISOS = "RetardosPermisos.csv"
-INCAPACIDADES = "Incapacidades.csv"
-VACACIONES = "Vacaciones.csv"
 
+if not os.path.exists(ARCHIVO):
 
-if not os.path.exists(ARCHIVO).
-witch open(ARCHIVO,"w",newline="") as f :
- writer =  csv.writer(f)
- writer.writerow(["Nombre" , "Apellido" , "Puesto" , "Departamento"])
+   with open(ARCHIVO, "w", newline="") as f:
+    writer = csv.writer(f)
+        writer.writerow([
+            "Nombre", "Apellido", "Puesto", "Departamento", "Turno",
+           "Fecha Nacimiento", "Sexo", "Último Grado Estudio",
+            "Cédula", "Domicilio", "Teléfono", "Correo Electrónico", "Fecha Ingreso"
+            
+  ])
 
- 
  def empleado_existe(nombre, apellido):
     with open(ARCHIVO, "r") as f:
         reader = csv.DictReader(f)
@@ -27,36 +28,54 @@ witch open(ARCHIVO,"w",newline="") as f :
                 return True
     return False
 
+   def crear_entrada(frame, texto, fila):
+   ttk.Label(frame, text=texto, background="#FFFFFF").grid(row=fila, column=0, pady=5, sticky="e")
+   entrada = ttk.Entry(frame, width=30)
+    entrada.grid(row=fila, column=1, pady=5)
+    return entrada
+
+def crear_combobox(frame, texto, fila, valores):
+
+   ttk.Label(frame, text=texto, background="#FFFEFE").grid(row=fila, column=0, pady=5, sticky="e")
+    combobox = ttk.Combobox(frame, values=valores, state="readonly", width=28)
+    combobox.grid(row=fila, column=1, pady=5)
+    combobo.current(0)
+    return combobox
+
 def registrar_empleado():
     ventana = tk.Toplevel()
     ventana.title("Registrar Empleado")
-    ventana.geometry("300x250")
+     ventana.geometry("450x600")
+   ventana.configure(bg="#e0f7fa")
+    frame = ttk.Frame(ventana, padding="20")
+    frame.pack(fill=tk.BOTH, expand=True)
 
- tk.Label(ventana, text="Nombre:").pack()
-    nombre = tk.Entry(ventana)
-    nombre.pack() 
+ entradas = {}
+   entradas["Nombre"] = crear_entrada(frame, "Nombre:", 0)
+   entradas["Apellido"] = crear_entrada(frame, "Apellido:", 1)
+
+   puestos = ["Médico", "Enfermero", "Médico General", "Pediatra", "Otorrinolaringólogo", "Cirujano Plástico"]
+    ttk.Label(frame, text="Puesto:", background="#FFFFFF").grid(row=2, column=0, pady=5, sticky="e")
+    puesto_cb = ttk.Combobox(frame, values=puestos, state="readonly", width=28)
+    puesto_cb.grid(row=2, column=1, pady=5)
+    puesto_cb.current(0)
     
-   tk.Label(ventana, text="Apellido:").pack()
-    apellido = tk.Entry(ventana)
-    apellido.pack()
+   departamento = crear_combobox(frame, "Departamento:", 3, ["1", "2", "3"])
+    turno = crear_combobox(frame, "Turno:", 4, ["Matutino", "Vespertino", "Noche"])
+    entradas["Fecha Nacimiento"] = crear_entrada(frame, "Fecha de Nacimiento (DD/MM/AAAA):", 5)
+    sexo = crear_combobox(frame, "Sexo:", 6, ["Mujer", "Hombre", "Otro"])
+    entradas["Último Grado Estudio"] = crear_entrada(frame, "Último Grado de Estudio:", 7)
+    entradas["Cédula"] = crear_entrada(frame, "Cédula:", 8)
+    entradas["Domicilio"] = crear_entrada(frame, "Domicilio:", 9)
+    entradas["Teléfono"] = crear_entrada(frame, "Teléfono:", 10)
+    entradas["Correo Electrónico"] = crear_entrada(frame, "Correo Electrónico:", 11)
+    entradas["Fecha Ingreso"] = crear_entrada(frame, "Fecha de Ingreso (DD/MM/AAAA):", 12)
+    def guardar():
+        campos_obligatorios = ["Nombre", "Apellido", "Fecha Nacimiento", "Último Grado Estudio", "Cédula", "Domicilio", "Teléfono", "Correo Electrónico", "Fecha Ingreso"]
 
-   tk.Label(ventana, text="Puesto:").pack()
-    puesto = tk.Entry(ventana)
-    puesto.pack()
-    
-   tk.Label(ventana, text="Departamento:").pack()
-    departamento = tk.Entry(ventana)
-    departamento.pack()
+   if any(not entradas[c].get().strip() for c in campos_obligatorios) or not puesto_cb.get() or not departamento.get() or not turno.get() or not sexo.get():
 
-   def guardar():
-        if nombre.get() and apellido.get() and puesto.get() and departamento.get():
-            with open(ARCHIVO, "a", newline="") as f:
-                writer = csv.writer(f)
-                writer.writerow([nombre.get(), apellido.get(), puesto.get(), departamento.get()])
-            messagebox.showinfo("Éxito", "Empleado registrado.")
-            ventana.destroy()
-        else:
-            messagebox.showwarning("Error", "Todos los campos son obligatorios.")
+   messagebox.showwarning("Error", "Todos los campos son obligatorios.")
 
    tk.Button(ventana, text="Guardar", command=guardar).pack(pady=10)
 
